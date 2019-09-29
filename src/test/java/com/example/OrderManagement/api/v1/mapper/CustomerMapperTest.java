@@ -42,12 +42,11 @@ public class CustomerMapperTest {
         Customer customer = customerMapper.customerDtoToCustomer(customerDTO);
 
         //then
-       // assertEquals(FIRSTNAME, customer.getFirstName());
-       // assertEquals(LASTNAME, customer.getLastName());
+        assertThat(customer.getFirstName(), is(equalTo(FIRSTNAME)));
+        assertThat(customer.getLastName(), is(equalTo(LASTNAME)));
 
-        assertThat(customer.getFirstName(),is(equalTo(FIRSTNAME)));
-        assertThat(customer.getLastName(),is(equalTo(LASTNAME)));
-
+        // assertEquals(FIRSTNAME, customer.getFirstName());
+        // assertEquals(LASTNAME, customer.getLastName());
 
     }
 }
