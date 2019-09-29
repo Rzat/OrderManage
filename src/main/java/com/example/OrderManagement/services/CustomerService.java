@@ -4,4 +4,6 @@ import com.example.OrderManagement.api.v1.model.CustomerDTO;
 
 public interface CustomerService {
     CustomerDTO createNewCustomer(CustomerDTO customerDTO);
+
+    CustomerDTO getCustomerById(Long id);
 }
