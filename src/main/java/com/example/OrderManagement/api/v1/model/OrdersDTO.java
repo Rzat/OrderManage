@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDTO {
-
+public class OrdersDTO {
 
     private Long id;
-    private String firstName;
-    private String lastName;
-   // private Set<Orders> orders = new HashSet<>();
+    private Long customerId;
+    private String description;
 }

@@ -21,6 +21,10 @@ public class Orders {
     @ManyToOne
     private Customer customer;
 
+    public Orders() {
+
+    }
+
     public Orders(String description, Customer customer) {
         this.description = description;
         this.customer = customer;
