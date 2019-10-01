@@ -13,5 +13,6 @@ public class CustomerDTO {
     private Long id;
     private String firstName;
     private String lastName;
+    private String category="Regular";
    // private Set<Orders> orders = new HashSet<>();
 }

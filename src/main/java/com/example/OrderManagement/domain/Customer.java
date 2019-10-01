@@ -17,6 +17,7 @@ public class Customer {
     private Long id;
     private String firstName;
     private String lastName;
+    private String category="Regular";
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")

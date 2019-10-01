@@ -17,6 +17,7 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
+
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
@@ -35,18 +36,14 @@ public class CustomerController {
 
     @PostMapping("/customer/{customerId}/order")
     public ResponseEntity<OrdersDTO> saveOrder(@RequestBody OrdersDTO ordersDTO, @PathVariable Long customerId) {
-      //  OrdersDTO dto = customerService.saveOrders(ordersDTO);
-        System.out.println(ordersDTO.getCustomerId());
+        //  OrdersDTO dto = customerService.saveOrders(ordersDTO);
         return new ResponseEntity<OrdersDTO>(customerService.saveOrders(ordersDTO), HttpStatus.OK);
     }
 
-/*
-    @PostMapping("/customer/{customerId}/order")
-    public String saveOrder(@RequestBody OrdersDTO ordersDTO, @PathVariable Long customerId) {
+    @GetMapping("/order/{id}")
+    public ResponseEntity<CustomerDTO> getOrdersByCustomerId(@PathVariable Long id) {
+        return new ResponseEntity<CustomerDTO>(customerService.findCommandById(id), HttpStatus.OK);
+    }
 
-        System.out.println(ordersDTO.getCustomerId());
-        OrdersDTO dto = customerService.saveOrders(ordersDTO);
-        log.debug("Logger of saved Order" + dto.getDescription());
-        return "order saved";
-    }*/
+
 }

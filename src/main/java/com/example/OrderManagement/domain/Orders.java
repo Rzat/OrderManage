@@ -1,6 +1,7 @@
 package com.example.OrderManagement.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,7 @@ public class Orders {
     private Long id;
     private String description;
 
+    @JsonIgnore
     @ManyToOne
     private Customer customer;
 

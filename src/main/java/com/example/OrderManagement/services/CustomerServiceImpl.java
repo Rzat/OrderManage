@@ -75,12 +75,31 @@ public class CustomerServiceImpl implements CustomerService {
                 .filter(orders -> orders.getId().equals(ordersDTO.getId()))
                 .findFirst();
 
+
         if (!savedOrdersOptional.isPresent()) {
             savedOrdersOptional = savedCustomer.getOrders().stream()
                     .filter(orders -> orders.getDescription().equals(ordersDTO.getDescription()))
                     .findFirst();
         }
 
+
         return ordersMapper.ordersToOrdersDto(savedOrdersOptional.get());
     }
+
+    @Override
+    public CustomerDTO findCommandById(Long id) {
+        return customerMapper.customerToCustomerDTO(findById(id));
+    }
+
+    @Override
+    public Customer findById(Long id) {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        if (!customerOptional.isPresent()) {
+            throw new RuntimeException("Customer Not Found");
+        }
+        return customerOptional.get();
+
+    }
+
+
 }
