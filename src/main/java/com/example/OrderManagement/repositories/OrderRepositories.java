@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface OrderRepositories extends JpaRepository<Orders, Long> {
 
-   // Optional<Orders> findByCustomer_Id(long id);
+  //  Optional<Orders> findByCustomer_Id2(long id);
     Optional<Orders> findAllByCustomer_Id(long id);
     List<Orders> findByCustomer_Id(Long id);
 }

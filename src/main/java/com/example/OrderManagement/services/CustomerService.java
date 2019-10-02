@@ -15,4 +15,7 @@ public interface CustomerService {
 
     Customer findById(Long id);
 
+    OrdersDTO findByCustomerIdAndOrderId(Long customerId, Long orderId);
+
+
 }

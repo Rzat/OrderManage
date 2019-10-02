@@ -3,6 +3,7 @@ package com.example.OrderManagement.controllers.v1;
 
 import com.example.OrderManagement.domain.Orders;
 import com.example.OrderManagement.repositories.OrderRepositories;
+import com.example.OrderManagement.services.CustomerService;
 import com.example.OrderManagement.services.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,12 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
     private final OrderRepositories orderRepositories;
+    private final CustomerService customerService;
 
-    public OrderController(OrderService orderService, OrderRepositories orderRepositories) {
+    public OrderController(OrderService orderService, OrderRepositories orderRepositories, CustomerService customerService) {
         this.orderService = orderService;
         this.orderRepositories = orderRepositories;
+        this.customerService = customerService;
     }
 
 
@@ -28,8 +31,6 @@ public class OrderController {
         List<Orders> ordersDTO = orderService.findByCustomerId(id);
         ordersDTO.forEach((n) -> System.out.println("***" + n.getDescription()));
         return new ResponseEntity<List<Orders>>(ordersDTO, HttpStatus.OK);
-
     }
-
 
 }

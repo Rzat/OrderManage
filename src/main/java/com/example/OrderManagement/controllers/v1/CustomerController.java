@@ -36,13 +36,18 @@ public class CustomerController {
 
     @PostMapping("/customer/{customerId}/order")
     public ResponseEntity<OrdersDTO> saveOrder(@RequestBody OrdersDTO ordersDTO, @PathVariable Long customerId) {
-        //  OrdersDTO dto = customerService.saveOrders(ordersDTO);
         return new ResponseEntity<OrdersDTO>(customerService.saveOrders(ordersDTO), HttpStatus.OK);
     }
 
     @GetMapping("/order/{id}")
-    public ResponseEntity<CustomerDTO> getOrdersByCustomerId(@PathVariable Long id) {
+    public ResponseEntity<CustomerDTO> getCustomerByCustomerId(@PathVariable Long id) {
         return new ResponseEntity<CustomerDTO>(customerService.findCommandById(id), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/{customerId}/ingredients/{orderId}/show")
+    public ResponseEntity<Object> getSelectedOrderByCustomerIdOrderId(@PathVariable Long customerId, @PathVariable Long orderId) {
+        return new ResponseEntity<Object>(customerService.findByCustomerIdAndOrderId(customerId, orderId), HttpStatus.OK);
     }
 
 

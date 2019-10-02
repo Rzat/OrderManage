@@ -8,7 +8,7 @@ public interface OrderService {
 
    // OrdersDTO getCustomeById(Long id);
 
-   // OrdersDTO findByCustomerId(Long id);
+    //OrdersDTO findByCustomerId2(Long id);
 
     List<Orders> findByCustomerId(Long id);
 

@@ -7,10 +7,12 @@ import com.example.OrderManagement.api.v1.model.OrdersDTO;
 import com.example.OrderManagement.domain.Customer;
 import com.example.OrderManagement.domain.Orders;
 import com.example.OrderManagement.repositories.CustomerRepository;
+import com.example.OrderManagement.repositories.OrderRepositories;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,11 +22,13 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerMapper customerMapper;
     private final CustomerRepository customerRepository;
     private final OrdersMapper ordersMapper;
+    private final OrderRepositories orderRepositories;
 
-    public CustomerServiceImpl(CustomerMapper mapper, CustomerRepository customerRepository, OrdersMapper ordersMapper) {
+    public CustomerServiceImpl(CustomerMapper mapper, CustomerRepository customerRepository, OrdersMapper ordersMapper, OrderRepositories orderRepositories) {
         this.customerMapper = mapper;
         this.customerRepository = customerRepository;
         this.ordersMapper = ordersMapper;
+        this.orderRepositories = orderRepositories;
     }
 
     @Override
@@ -65,6 +69,17 @@ public class CustomerServiceImpl implements CustomerService {
         } else {
             //add new order
             Orders orders = ordersMapper.ordersDtoToOrders(ordersDTO);
+            List<Orders> ordersList = orderRepositories.findByCustomer_Id(ordersDTO.getCustomerId());
+            System.out.println("Size of Order List" + ordersList.size());
+            int size = ordersList.size();
+            if (size > 19) {
+                customer.setCategory("Platinum");
+                log.info("CustomerCategory: " + customer.getCategory());
+            }else if (size > 9) {
+                customer.setCategory("Gold");
+                log.info("CustomerCategory: " + customer.getCategory());
+            }
+
             orders.setCustomer(customer);
             customer.addOrder(orders);
         }
@@ -99,6 +114,24 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return customerOptional.get();
 
+    }
+
+    @Override
+    public OrdersDTO findByCustomerIdAndOrderId(Long customerId, Long orderId) {
+        Optional<Customer> customerOptional = customerRepository.findById(customerId);
+        if (!customerOptional.isPresent()) {
+            log.error("customer i not found: " + customerId);
+        }
+        Customer customer = customerOptional.get();
+
+        Optional<OrdersDTO> ordersDTO = customer.getOrders().stream()
+                .filter(orders -> orders.getId().equals(orderId))
+                .map(orders -> ordersMapper.ordersToOrdersDto(orders)).findFirst();
+
+        if (!ordersDTO.isPresent()) {
+            log.error("Order id not found: " + orderId);
+        }
+        return ordersDTO.get();
     }
 
 

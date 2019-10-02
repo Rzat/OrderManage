@@ -7,6 +7,7 @@ import com.example.OrderManagement.api.v1.model.OrdersDTO;
 import com.example.OrderManagement.domain.Customer;
 import com.example.OrderManagement.domain.Orders;
 import com.example.OrderManagement.repositories.CustomerRepository;
+import com.example.OrderManagement.repositories.OrderRepositories;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -23,6 +24,8 @@ public class CustomerServiceImplTest {
 
     @Mock
     CustomerRepository customerRepository;
+    @Mock
+    OrderRepositories orderRepositories;
 
     CustomerMapper customerMapper = CustomerMapper.INSTANCE;
     OrdersMapper ordersMapper = OrdersMapper.INSTANCE;
@@ -32,7 +35,7 @@ public class CustomerServiceImplTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        customerService = new CustomerServiceImpl(customerMapper, customerRepository, ordersMapper);
+        customerService = new CustomerServiceImpl(customerMapper, customerRepository, ordersMapper, orderRepositories);
     }
 
     @Test
