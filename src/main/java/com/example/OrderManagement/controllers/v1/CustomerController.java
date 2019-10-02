@@ -34,8 +34,8 @@ public class CustomerController {
     }
 
 
-    @PostMapping("/customer/{customerId}/order")
-    public ResponseEntity<OrdersDTO> saveOrder(@RequestBody OrdersDTO ordersDTO, @PathVariable Long customerId) {
+    @PostMapping("/createOrder")
+    public ResponseEntity<OrdersDTO> saveOrder(@RequestBody OrdersDTO ordersDTO) {
         return new ResponseEntity<OrdersDTO>(customerService.saveOrders(ordersDTO), HttpStatus.OK);
     }
 

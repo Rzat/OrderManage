@@ -1,6 +1,7 @@
 package com.example.OrderManagement.controllers.v1;
 
 import com.example.OrderManagement.api.v1.model.CustomerDTO;
+import com.example.OrderManagement.api.v1.model.OrdersDTO;
 import com.example.OrderManagement.controllers.RestResponseEntityExceptionHandler;
 import com.example.OrderManagement.services.CustomerService;
 import com.example.OrderManagement.services.ResourceNotFoundException;
@@ -55,7 +56,6 @@ public class CustomerControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(customer)))
                 .andExpect(status().isOk());
-        //  .andExpect(jsonPath("$.firstName", equalTo("Fred")));
     }
 
     @Test
@@ -79,7 +79,21 @@ public class CustomerControllerTest {
         mockMvc.perform(get(CustomerController.BASE_URL + "22")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+    }
 
+    @Test
+    public void createOrder() throws Exception {
+        //given
+        OrdersDTO ordersDTO = new OrdersDTO();
+        ordersDTO.setCustomerId(1L);
+        ordersDTO.setDescription("testOrder");
+
+        when(customerService.saveOrders(ordersDTO)).thenReturn(ordersDTO);
+
+        mockMvc.perform(post(CustomerController.BASE_URL + "/createOrder")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(ordersDTO)))
+                .andExpect(status().isOk());
     }
 
 }
