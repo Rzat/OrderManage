@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 @EqualsAndHashCode(exclude = {"customer"})
 public class Orders {
 
@@ -24,7 +24,7 @@ public class Orders {
     @JsonIgnore
     @ManyToOne
     private Customer customer;
-    private String discountApplied;
+    private int discountAppliedInPercent;
 
     public Orders() {
 

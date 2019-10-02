@@ -1,6 +1,7 @@
 package com.example.OrderManagement.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class Customer {
 
     @Id
@@ -17,9 +19,9 @@ public class Customer {
     private Long id;
     private String firstName;
     private String lastName;
-    private String category="Regular";
-    private String discount;
-
+    private String category = "Regular";
+    private int discountInPercent;
+    private int totalDiscountGiven;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private Set<Orders> orders = new HashSet<>();

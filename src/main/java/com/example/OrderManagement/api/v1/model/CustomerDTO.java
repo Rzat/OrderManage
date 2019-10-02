@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class CustomerDTO {
 
 
@@ -16,6 +16,7 @@ public class CustomerDTO {
     private String firstName;
     private String lastName;
     private String category="Regular";
-    private String discount;
+    private int discountInPercent;
+    private int totalDiscountGiven;
    // private Set<Orders> orders = new HashSet<>();
 }

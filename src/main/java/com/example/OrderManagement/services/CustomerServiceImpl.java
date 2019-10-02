@@ -63,6 +63,28 @@ public class CustomerServiceImpl implements CustomerService {
                 .stream()
                 .filter(orders -> orders.getId().equals(ordersDTO.getId()))
                 .findFirst();
+        orderOptionalPresent(ordersDTO, customer, ordersOptional);
+
+        Customer savedCustomer = customerRepository.save(customer);
+
+        Optional<Orders> savedOrdersOptional = savedCustomer.getOrders().stream()
+                .filter(orders -> orders.getId().equals(ordersDTO.getId()))
+                .findFirst();
+
+
+        if (!savedOrdersOptional.isPresent()) {
+            savedOrdersOptional = savedCustomer.getOrders().stream()
+                    .filter(orders -> orders.getDescription().equals(ordersDTO.getDescription()))
+                    .findFirst();
+        }
+
+
+        return ordersMapper.ordersToOrdersDto(savedOrdersOptional.get());
+    }
+
+    static int totalDiscount = 0;
+
+    private void orderOptionalPresent(OrdersDTO ordersDTO, Customer customer, Optional<Orders> ordersOptional) {
         if (ordersOptional.isPresent()) {
             Orders orderFound = ordersOptional.get();
             orderFound.setDescription(ordersDTO.getDescription());
@@ -70,7 +92,7 @@ public class CustomerServiceImpl implements CustomerService {
             //add new order
             Orders orders = ordersMapper.ordersDtoToOrders(ordersDTO);
             List<Orders> ordersList = orderRepositories.findByCustomer_Id(ordersDTO.getCustomerId());
-            System.out.println("Size of Order List" + ordersList.size());
+            log.info("Number of Orders" + ordersList.size());
             int size = ordersList.size();
             if (size == 8) {
                 sendCustomerUpgradationNotificationMail("\"You have placed 9 orders with us. Buy one more" +
@@ -93,35 +115,25 @@ public class CustomerServiceImpl implements CustomerService {
             }
             if (size > 18) {
                 customer.setCategory("Platinum");
-                customer.setDiscount("20%");
-                orders.setDiscountApplied("20%");
+                customer.setDiscountInPercent(20);
+                orders.setDiscountAppliedInPercent(20);
+                totalDiscount = totalDiscount + 20;
+                customer.setTotalDiscountGiven(totalDiscount);
                 log.info("CustomerCategory: " + customer.getCategory());
             } else if (size > 8) {
+
                 customer.setCategory("Gold");
-                customer.setDiscount("10%");
-                orders.setDiscountApplied("10%");
+                customer.setDiscountInPercent(10);
+                orders.setDiscountAppliedInPercent(10);
+                totalDiscount = totalDiscount + 10;
+                customer.setTotalDiscountGiven(totalDiscount);
+
                 log.info("CustomerCategory: " + customer.getCategory());
             }
 
             orders.setCustomer(customer);
             customer.addOrder(orders);
         }
-
-        Customer savedCustomer = customerRepository.save(customer);
-
-        Optional<Orders> savedOrdersOptional = savedCustomer.getOrders().stream()
-                .filter(orders -> orders.getId().equals(ordersDTO.getId()))
-                .findFirst();
-
-
-        if (!savedOrdersOptional.isPresent()) {
-            savedOrdersOptional = savedCustomer.getOrders().stream()
-                    .filter(orders -> orders.getDescription().equals(ordersDTO.getDescription()))
-                    .findFirst();
-        }
-
-
-        return ordersMapper.ordersToOrdersDto(savedOrdersOptional.get());
     }
 
     private void sendCustomerUpgradationNotificationMail(String s) {

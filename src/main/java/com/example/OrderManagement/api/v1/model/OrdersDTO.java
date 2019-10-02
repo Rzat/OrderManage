@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class OrdersDTO {
 
     private Long id;
     private Long customerId;
     private String description;
-    private String discountApplied;
+    private int discountAppliedInPercent;
 }
