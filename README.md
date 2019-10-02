@@ -61,6 +61,16 @@ when you will run the application, the database will be loaded with the two defa
 											"discountInPercent": 10,
 											"totalDiscountGiven": 20
 										}
+										
+										
+										{
+                                        	"id": 3,
+                                        	"firstName": "Tom",
+                                        	"lastName": "Brew",
+                                        	"category": "Platinum",
+                                        	"discountInPercent": 20,
+                                        	"totalDiscountGiven": 40
+                                        }
 	
 	4) get selected Order By CustomerIdOrderId = http://localhost:8040/api/v1/customers/3/ingredients/5/show
 			json expected Response:  
