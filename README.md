@@ -64,8 +64,8 @@ when you will run the application, the database will be loaded with the two defa
 										
 										
 										{
-                                        	"id": 3,
-                                        	"firstName": "Tom",
+                                        	"id": 4,
+                                        	"firstName": "Mum",
                                         	"lastName": "Brew",
                                         	"category": "Platinum",
                                         	"discountInPercent": 20,
