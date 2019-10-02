@@ -39,16 +39,19 @@ public class CustomerController {
         return new ResponseEntity<OrdersDTO>(customerService.saveOrders(ordersDTO), HttpStatus.OK);
     }
 
-    @GetMapping("/order/{id}")
-    public ResponseEntity<CustomerDTO> getCustomerByCustomerId(@PathVariable Long id) {
-        return new ResponseEntity<CustomerDTO>(customerService.findCommandById(id), HttpStatus.OK);
-    }
-
-
     @GetMapping("/{customerId}/ingredients/{orderId}/show")
     public ResponseEntity<Object> getSelectedOrderByCustomerIdOrderId(@PathVariable Long customerId, @PathVariable Long orderId) {
         return new ResponseEntity<Object>(customerService.findByCustomerIdAndOrderId(customerId, orderId), HttpStatus.OK);
     }
+
+
+
+/*
+    @GetMapping("/order/{id}")
+    public ResponseEntity<CustomerDTO> getCustomerByCustomerId(@PathVariable Long id) {
+        return new ResponseEntity<CustomerDTO>(customerService.findCommandById(id), HttpStatus.OK);
+    }
+*/
 
 
 }

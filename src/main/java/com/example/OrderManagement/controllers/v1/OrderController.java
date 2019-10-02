@@ -27,9 +27,12 @@ public class OrderController {
 
 
     @GetMapping("/customer/{id}")
-    public ResponseEntity<List<Orders>> getCustomerById(@PathVariable Long id) {
+    public ResponseEntity<List<Orders>> getAllOrdersByCustomerById(@PathVariable Long id) {
         List<Orders> ordersDTO = orderService.findByCustomerId(id);
         ordersDTO.forEach((n) -> System.out.println("***" + n.getDescription()));
+        if(ordersDTO.isEmpty()){
+            return new ResponseEntity<List<Orders>>(ordersDTO, HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<List<Orders>>(ordersDTO, HttpStatus.OK);
     }
 
