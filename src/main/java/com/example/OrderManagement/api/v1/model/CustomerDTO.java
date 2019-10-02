@@ -1,5 +1,6 @@
 package com.example.OrderManagement.api.v1.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerDTO {
 
 
@@ -14,5 +16,6 @@ public class CustomerDTO {
     private String firstName;
     private String lastName;
     private String category="Regular";
+    private String discount;
    // private Set<Orders> orders = new HashSet<>();
 }

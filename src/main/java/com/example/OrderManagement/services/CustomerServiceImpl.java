@@ -72,11 +72,20 @@ public class CustomerServiceImpl implements CustomerService {
             List<Orders> ordersList = orderRepositories.findByCustomer_Id(ordersDTO.getCustomerId());
             System.out.println("Size of Order List" + ordersList.size());
             int size = ordersList.size();
-            if (size > 19) {
+            if (size == 8) {
+                sendCustomerUpgradationNotificationMail("\"You have placed 9 orders with us. Buy one more stuff and you will be promoted\n" +
+                        "to Gold customer and enjoy 10% discounts!\"");
+            } else if (size == 18) {
+                sendCustomerUpgradationNotificationMail("\"You have placed 19 orders with us. Buy one more stuff and you will be promoted\n" +
+                        "to Platinum customer and enjoy 20% discounts!\"");
+            }
+            if (size > 18) {
                 customer.setCategory("Platinum");
+                customer.setDiscount("20%");
                 log.info("CustomerCategory: " + customer.getCategory());
-            }else if (size > 9) {
+            } else if (size > 8) {
                 customer.setCategory("Gold");
+                customer.setDiscount("10%");
                 log.info("CustomerCategory: " + customer.getCategory());
             }
 
@@ -99,6 +108,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         return ordersMapper.ordersToOrdersDto(savedOrdersOptional.get());
+    }
+
+    private void sendCustomerUpgradationNotificationMail(String s) {
+        log.info(s);
+        log.info("Sent an email to Customers");
     }
 
     @Override
