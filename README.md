@@ -1,7 +1,11 @@
 # OrderManage
+
+
+
 when you will run the application, the database will be loaded with the two default customers with two default orders each.
 
-below are the API's endpoints list and description
+
+    below are the API's endpoints list and description
 	1) Create new Customer= http://localhost:8040/api/v1/customers
 			json request for api:  		{
 											"firstName":"Tom",
