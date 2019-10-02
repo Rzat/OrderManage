@@ -73,19 +73,33 @@ public class CustomerServiceImpl implements CustomerService {
             System.out.println("Size of Order List" + ordersList.size());
             int size = ordersList.size();
             if (size == 8) {
-                sendCustomerUpgradationNotificationMail("\"You have placed 9 orders with us. Buy one more stuff and you will be promoted\n" +
+                sendCustomerUpgradationNotificationMail("\"You have placed 9 orders with us. Buy one more" +
+                        " stuff and you will be promoted " +
                         "to Gold customer and enjoy 10% discounts!\"");
             } else if (size == 18) {
-                sendCustomerUpgradationNotificationMail("\"You have placed 19 orders with us. Buy one more stuff and you will be promoted\n" +
+                sendCustomerUpgradationNotificationMail("\"You have placed 19 orders with us. Buy one more" +
+                        " stuff and you will be promoted " +
                         "to Platinum customer and enjoy 20% discounts!\"");
+            }
+
+            if (size == 9) {
+                sendCustomerUpgradationNotificationMail("Congratulations!" + "\n" + "Your account has been " +
+                        "upgraded for Gold membership, Now you can " +
+                        "avail 10% discount on products.");
+            } else if (size == 19) {
+                sendCustomerUpgradationNotificationMail("Congratulations!" + "\n" + "Your account has been" +
+                        " upgraded for Platinum membership, Now you can " +
+                        "avail 20% discount on products.");
             }
             if (size > 18) {
                 customer.setCategory("Platinum");
                 customer.setDiscount("20%");
+                orders.setDiscountApplied("20%");
                 log.info("CustomerCategory: " + customer.getCategory());
             } else if (size > 8) {
                 customer.setCategory("Gold");
                 customer.setDiscount("10%");
+                orders.setDiscountApplied("10%");
                 log.info("CustomerCategory: " + customer.getCategory());
             }
 
@@ -112,7 +126,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private void sendCustomerUpgradationNotificationMail(String s) {
         log.info(s);
-        log.info("Sent an email to Customers");
+        log.info("Email Sent to Customers");
     }
 
     @Override

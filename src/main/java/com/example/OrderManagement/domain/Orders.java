@@ -2,6 +2,7 @@ package com.example.OrderManagement.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(exclude = {"customer"})
 public class Orders {
 
@@ -22,6 +24,7 @@ public class Orders {
     @JsonIgnore
     @ManyToOne
     private Customer customer;
+    private String discountApplied;
 
     public Orders() {
 

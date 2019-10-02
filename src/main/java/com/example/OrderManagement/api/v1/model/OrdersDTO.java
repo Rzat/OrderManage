@@ -14,4 +14,5 @@ public class OrdersDTO {
     private Long id;
     private Long customerId;
     private String description;
+    private String discountApplied;
 }
