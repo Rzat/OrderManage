@@ -7,6 +7,7 @@ import com.example.OrderManagement.services.CustomerService;
 import com.example.OrderManagement.services.ResourceNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
@@ -26,7 +27,7 @@ public class CustomerControllerTest {
     @Mock
     CustomerService customerService;
 
-    @Mock
+    @InjectMocks
     CustomerController customerController;
 
     MockMvc mockMvc;
@@ -72,8 +73,10 @@ public class CustomerControllerTest {
 
         //when
         mockMvc.perform(get(CustomerController.BASE_URL + "/1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(customer1)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName", equalTo("Michel")));
     }
 
     @Test
